@@ -1,7 +1,7 @@
 define [], ->
   # For use as a mixin
   ->
-    @_initOptimizely = (testName, notMatch, callback, callbackArgs)->
+    @_activateOptimizelyExperiment = (testName, notMatch, callback, callbackArgs)->
       oData = window.optimizely.data
       activeExperiments = oData.state.activeExperiments
       mCnt = activeExperiments.length
