@@ -1,0 +1,11 @@
+{
+  name: "optimizely-config",
+  version: "1.0.0",
+  main: "optimizely-config.js",
+  dependencies: {},
+  ignore: [
+    "src/",
+    "README.md",
+    ".gitignore"
+  ]
+}
