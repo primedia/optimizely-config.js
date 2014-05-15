@@ -2,7 +2,7 @@
 (function() {
   define([], function() {
     return function() {
-      return this._initOptimizely = function(testName, notMatch, callback, callbackArgs) {
+      return this._activateOptimizelyExperiment = function(testName, notMatch, callback, callbackArgs) {
         var activeExperiments, curTest, curVar, i, mCnt, mExp, mTest, mVars, oData, soTestRegex, soVariationRegex, tCount;
         oData = window.optimizely.data;
         activeExperiments = oData.state.activeExperiments;
