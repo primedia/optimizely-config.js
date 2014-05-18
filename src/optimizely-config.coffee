@@ -1,30 +1,18 @@
-define [], ->
+'use strict';
+define ['./experiment-utils'], (util) ->
   # For use as a mixin
-  ->
-    @_activateOptimizelyExperiment = (testName, notMatch, callback, callbackArgs)->
-      oData = window.optimizely.data
-      activeExperiments = oData.state.activeExperiments
-      mCnt = activeExperiments.length
-      mTest = ''
-      mVars = ''
-      mExp = ''
-      tCount = 0
-      soTestRegex = new RegExp(testName, 'i')
-      soVariationRegex = new RegExp(notMatch, 'i')
-      i = 0
+  optimizelyConfig = ->
 
-      while i < (mCnt)
-        mExp = activeExperiments[i]
-        curTest = oData.experiments[mExp].name
-        curVar = oData.state.variationNamesMap[mExp]
-        if tCount > 0
-          mTest += ' : '
-          mVars += ' : '
-        mTest += curTest
-        mVars += curVar
-        tCount += 1
-        i++
+    @activateExperimentWithCallback = (experimentName, notMatch, callback, callbackArgs) ->
+      if util().isExperientMatch(experimentName, notMatch)
+        return callback.apply(null, callbackArgs)
 
-      if mTest.match(soTestRegex) and not mVars.match(soVariationRegex)
-        callback.apply(null,callbackArgs)
+    @isExperementActive = (experimentName, notMatch) ->
+      util().isExperientMatch(experimentName, notMatch)
 
+    return {
+      activateExperimentWithCallback: @activateExperimentWithCallback
+      isExperementActive: @isExperementActive
+    }
+
+  return optimizelyConfig
