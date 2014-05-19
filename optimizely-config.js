@@ -2,23 +2,19 @@
 (function() {
   'use strict';
   define(['./active-experiments'], function(activeExperiments) {
-    var optimizelyConfig;
-    optimizelyConfig = function() {
-      var activateExperiment, isExperimentActive;
-      activateExperiment = function(experimentName, notMatch, callback, callbackArgs) {
-        if (activeExperiments().isExperientMatch(experimentName, notMatch)) {
-          return callback.apply(null, callbackArgs);
-        }
-      };
-      isExperimentActive = function(experimentName, notMatch) {
-        return activeExperiments().isExperientMatch(experimentName, notMatch);
-      };
-      return {
-        activateExperiment: activateExperiment,
-        isExperimentActive: isExperimentActive
-      };
+    var activateExperiment, isExperimentActive;
+    activateExperiment = function(experimentName, notMatch, callback, callbackArgs) {
+      if (activeExperiments.exists(experimentName, notMatch)) {
+        return callback.apply(null, callbackArgs);
+      }
     };
-    return optimizelyConfig;
+    isExperimentActive = function(experimentName, notMatch) {
+      return activeExperiments.exists(experimentName, notMatch);
+    };
+    return {
+      activateExperiment: activateExperiment,
+      isExperimentActive: isExperimentActive
+    };
   });
 
 }).call(this);

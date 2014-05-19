@@ -2,62 +2,49 @@
 (function() {
   'use strict';
   define([], function() {
-    var activeExperiments;
-    activeExperiments = function() {
-      var collection, isEmpty, isExperientMatch, load;
-      collection = function() {
-        if (window.rentPathExperiments == null) {
-          window.rentPathExperiments = load();
-        }
-        return window.rentPathExperiments || {};
-      };
-      isEmpty = function(obj) {
-        if ((obj != null) && (Object.keys(obj).length > 0)) {
-          return false;
-        } else {
+    var collection, exists, load;
+    collection = function() {
+      if (window.rentPathExperiments == null) {
+        window.rentPathExperiments = load();
+      }
+      return window.rentPathExperiments || {};
+    };
+    exists = function(experimentName, notMatch) {
+      var experiment, soTestRegex, soVariationRegex, variation, _ref;
+      soTestRegex = new RegExp(experimentName, "i");
+      soVariationRegex = new RegExp(notMatch, "i");
+      _ref = collection();
+      for (experiment in _ref) {
+        variation = _ref[experiment];
+        if (experiment.match(soTestRegex) && !variation.match(soVariationRegex)) {
           return true;
         }
-      };
-      isExperientMatch = function(experimentName, notMatch) {
-        var experiment, soTestRegex, soVariationRegex, variation, _ref;
-        soTestRegex = new RegExp(experimentName, "i");
-        soVariationRegex = new RegExp(notMatch, "i");
-        _ref = collection();
-        for (experiment in _ref) {
-          variation = _ref[experiment];
-          if (experiment.match(soTestRegex) && !variation.match(soVariationRegex)) {
-            return true;
-          }
-        }
-        return false;
-      };
-      load = function() {
-        var allExperiments, curTest, curVar, experiments, i, mExp, oActiveExperiments, oData, optimizelyObj, _i, _len;
-        if (!window.optimizely) {
-          return {};
-        }
-        experiments = {};
-        optimizelyObj = window.optimizely;
-        oData = optimizelyObj.data;
-        oActiveExperiments = oData.state.activeExperiments;
-        allExperiments = optimizelyObj.allExperiments;
-        i = 0;
-        for (i = _i = 0, _len = oActiveExperiments.length; _i < _len; i = ++_i) {
-          mExp = oActiveExperiments[i];
-          if (allExperiments[mExp].enabled) {
-            curTest = oData.experiments[mExp].name;
-            curVar = oData.state.variationNamesMap[mExp];
-            experiments[curTest] = curVar;
-          }
-          i++;
-        }
-        return experiments;
-      };
-      return {
-        isExperientMatch: isExperientMatch
-      };
+      }
+      return false;
     };
-    return activeExperiments;
+    load = function() {
+      var allExperiments, curTest, curVar, experiments, mExp, oActiveExperiments, oData, optimizelyObj, _i, _len;
+      if (!window.optimizely) {
+        return {};
+      }
+      experiments = {};
+      optimizelyObj = window.optimizely;
+      oData = optimizelyObj.data;
+      oActiveExperiments = oData.state.activeExperiments;
+      allExperiments = optimizelyObj.allExperiments;
+      for (_i = 0, _len = oActiveExperiments.length; _i < _len; _i++) {
+        mExp = oActiveExperiments[_i];
+        if (allExperiments[mExp].enabled) {
+          curTest = oData.experiments[mExp].name;
+          curVar = oData.state.variationNamesMap[mExp];
+          experiments[curTest] = curVar;
+        }
+      }
+      return experiments;
+    };
+    return {
+      exists: exists
+    };
   });
 
 }).call(this);
