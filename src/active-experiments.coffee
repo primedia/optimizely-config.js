@@ -3,46 +3,42 @@ define [], ->
 
   activeExperiments = ->
 
-    getActiveExperiments = ->
-      return {} if isEmpty(window.rentPathExperiments)
+    collection = ->
+      window.rentPathExperiments ?= load()
       (window.rentPathExperiments || {})
 
     isEmpty = (obj) ->
       if obj? and (Object.keys(obj).length > 0) then false else true
 
     isExperientMatch = (experimentName, notMatch) ->
-      window.rentPathExperiments ||= loadActiveExperiments()
-      return false if isEmpty(window.rentPathExperiments)
-
       soTestRegex      = new RegExp(experimentName, "i")
       soVariationRegex = new RegExp(notMatch, "i")
 
-      for experiment, variation of getActiveExperiments()
+      for experiment, variation of collection()
         if (experiment.match(soTestRegex) and not variation.match(soVariationRegex))
           return true
 
       false
 
-    loadActiveExperiments = ->
+    load = ->
       return {} unless window.optimizely
 
-      rentPathActiveExperiments = {}
-      optimizelyObj             = window.optimizely
-      oData                     = optimizelyObj.data
-      oActiveExperiments         = oData.state.activeExperiments
-      allExperiments            = optimizelyObj.allExperiments
-      i                         = 0
+      experiments        = {}
+      optimizelyObj      = window.optimizely
+      oData              = optimizelyObj.data
+      oActiveExperiments = oData.state.activeExperiments
+      allExperiments     = optimizelyObj.allExperiments
+      i                  = 0
 
-      while i < (oActiveExperiments.length)
-        mExp = oActiveExperiments[i]
+      for mExp, i in oActiveExperiments
         if allExperiments[mExp].enabled
           curTest = oData.experiments[mExp].name
           curVar  = oData.state.variationNamesMap[mExp]
 
-          rentPathActiveExperiments[curTest] = curVar
+          experiments[curTest] = curVar
         i++
 
-      rentPathActiveExperiments
+      experiments
 
     return {
       isExperientMatch: isExperientMatch

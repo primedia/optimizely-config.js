@@ -4,10 +4,10 @@
   define([], function() {
     var activeExperiments;
     activeExperiments = function() {
-      var getActiveExperiments, isEmpty, isExperientMatch, loadActiveExperiments;
-      getActiveExperiments = function() {
-        if (isEmpty(window.rentPathExperiments)) {
-          return {};
+      var collection, isEmpty, isExperientMatch, load;
+      collection = function() {
+        if (window.rentPathExperiments == null) {
+          window.rentPathExperiments = load();
         }
         return window.rentPathExperiments || {};
       };
@@ -20,13 +20,9 @@
       };
       isExperientMatch = function(experimentName, notMatch) {
         var experiment, soTestRegex, soVariationRegex, variation, _ref;
-        window.rentPathExperiments || (window.rentPathExperiments = loadActiveExperiments());
-        if (isEmpty(window.rentPathExperiments)) {
-          return false;
-        }
         soTestRegex = new RegExp(experimentName, "i");
         soVariationRegex = new RegExp(notMatch, "i");
-        _ref = getActiveExperiments();
+        _ref = collection();
         for (experiment in _ref) {
           variation = _ref[experiment];
           if (experiment.match(soTestRegex) && !variation.match(soVariationRegex)) {
@@ -35,27 +31,27 @@
         }
         return false;
       };
-      loadActiveExperiments = function() {
-        var allExperiments, curTest, curVar, i, mExp, oActiveExperiments, oData, optimizelyObj, rentPathActiveExperiments;
+      load = function() {
+        var allExperiments, curTest, curVar, experiments, i, mExp, oActiveExperiments, oData, optimizelyObj, _i, _len;
         if (!window.optimizely) {
           return {};
         }
-        rentPathActiveExperiments = {};
+        experiments = {};
         optimizelyObj = window.optimizely;
         oData = optimizelyObj.data;
         oActiveExperiments = oData.state.activeExperiments;
         allExperiments = optimizelyObj.allExperiments;
         i = 0;
-        while (i < oActiveExperiments.length) {
+        for (i = _i = 0, _len = oActiveExperiments.length; _i < _len; i = ++_i) {
           mExp = oActiveExperiments[i];
           if (allExperiments[mExp].enabled) {
             curTest = oData.experiments[mExp].name;
             curVar = oData.state.variationNamesMap[mExp];
-            rentPathActiveExperiments[curTest] = curVar;
+            experiments[curTest] = curVar;
           }
           i++;
         }
-        return rentPathActiveExperiments;
+        return experiments;
       };
       return {
         isExperientMatch: isExperientMatch

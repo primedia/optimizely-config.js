@@ -7,12 +7,12 @@ define ['./active-experiments'], (activeExperiments) ->
       if activeExperiments().isExperientMatch(experimentName, notMatch)
         return callback.apply(null, callbackArgs)
 
-    isExperementActive = (experimentName, notMatch) ->
+    isExperimentActive = (experimentName, notMatch) ->
       activeExperiments().isExperientMatch(experimentName, notMatch)
 
     return {
       activateExperiment: activateExperiment
-      isExperementActive: isExperementActive
+      isExperimentActive: isExperimentActive
     }
 
   return optimizelyConfig

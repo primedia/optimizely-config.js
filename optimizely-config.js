@@ -4,18 +4,18 @@
   define(['./active-experiments'], function(activeExperiments) {
     var optimizelyConfig;
     optimizelyConfig = function() {
-      var activateExperiment, isExperementActive;
+      var activateExperiment, isExperimentActive;
       activateExperiment = function(experimentName, notMatch, callback, callbackArgs) {
         if (activeExperiments().isExperientMatch(experimentName, notMatch)) {
           return callback.apply(null, callbackArgs);
         }
       };
-      isExperementActive = function(experimentName, notMatch) {
+      isExperimentActive = function(experimentName, notMatch) {
         return activeExperiments().isExperientMatch(experimentName, notMatch);
       };
       return {
         activateExperiment: activateExperiment,
-        isExperementActive: isExperementActive
+        isExperimentActive: isExperimentActive
       };
     };
     return optimizelyConfig;
