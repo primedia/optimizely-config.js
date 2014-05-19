@@ -10,7 +10,7 @@ define [], ->
     isEmpty = (obj) ->
       if obj? and (Object.keys(obj).length > 0) then false else true
 
-    isExperientMatch = (experimentName, notMatch) ->
+    isExperimentMatch = (experimentName, notMatch) ->
       soTestRegex      = new RegExp(experimentName, "i")
       soVariationRegex = new RegExp(notMatch, "i")
 
@@ -28,20 +28,18 @@ define [], ->
       oData              = optimizelyObj.data
       oActiveExperiments = oData.state.activeExperiments
       allExperiments     = optimizelyObj.allExperiments
-      i                  = 0
 
-      for mExp, i in oActiveExperiments
+      for mExp in oActiveExperiments
         if allExperiments[mExp].enabled
           curTest = oData.experiments[mExp].name
           curVar  = oData.state.variationNamesMap[mExp]
 
           experiments[curTest] = curVar
-        i++
 
       experiments
 
     return {
-      isExperientMatch: isExperientMatch
+      isExperimentMatch: isExperimentMatch
     }
 
   return activeExperiments

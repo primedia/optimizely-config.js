@@ -4,11 +4,11 @@ define ['./active-experiments'], (activeExperiments) ->
   optimizelyConfig = ->
 
     activateExperiment = (experimentName, notMatch, callback, callbackArgs) ->
-      if activeExperiments().isExperientMatch(experimentName, notMatch)
+      if activeExperiments().isExperimentMatch(experimentName, notMatch)
         return callback.apply(null, callbackArgs)
 
     isExperimentActive = (experimentName, notMatch) ->
-      activeExperiments().isExperientMatch(experimentName, notMatch)
+      activeExperiments().isExperimentMatch(experimentName, notMatch)
 
     return {
       activateExperiment: activateExperiment
