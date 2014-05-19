@@ -4,17 +4,18 @@
   define(['./experiment-utils'], function(util) {
     var optimizelyConfig;
     optimizelyConfig = function() {
-      this.activateExperimentWithCallback = function(experimentName, notMatch, callback, callbackArgs) {
+      var activateExperimentWithCallback, isExperementActive;
+      activateExperimentWithCallback = function(experimentName, notMatch, callback, callbackArgs) {
         if (util().isExperientMatch(experimentName, notMatch)) {
           return callback.apply(null, callbackArgs);
         }
       };
-      this.isExperementActive = function(experimentName, notMatch) {
+      isExperementActive = function(experimentName, notMatch) {
         return util().isExperientMatch(experimentName, notMatch);
       };
       return {
-        activateExperimentWithCallback: this.activateExperimentWithCallback,
-        isExperementActive: this.isExperementActive
+        activateExperimentWithCallback: activateExperimentWithCallback,
+        isExperementActive: isExperementActive
       };
     };
     return optimizelyConfig;
