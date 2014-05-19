@@ -14,11 +14,10 @@ define [], ->
       window.rentPathExperiments ||= loadActiveExperiments()
       return false if isEmpty(window.rentPathExperiments)
 
-      soTestRegex                  = new RegExp(experimentName, "i")
-      soVariationRegex             = new RegExp(notMatch, "i")
+      soTestRegex      = new RegExp(experimentName, "i")
+      soVariationRegex = new RegExp(notMatch, "i")
 
       for experiment, variation of getActiveExperiments()
-
         if (experiment.match(soTestRegex) and not variation.match(soVariationRegex))
           return true
 
