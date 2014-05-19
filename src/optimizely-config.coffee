@@ -1,17 +1,17 @@
 'use strict';
-define ['./experiment-utils'], (util) ->
+define ['./active-experiments'], (activeExperiments) ->
   # For use as a mixin
   optimizelyConfig = ->
 
-    activateExperimentWithCallback = (experimentName, notMatch, callback, callbackArgs) ->
-      if util().isExperientMatch(experimentName, notMatch)
+    activateExperiment = (experimentName, notMatch, callback, callbackArgs) ->
+      if activeExperiments().isExperientMatch(experimentName, notMatch)
         return callback.apply(null, callbackArgs)
 
     isExperementActive = (experimentName, notMatch) ->
-      util().isExperientMatch(experimentName, notMatch)
+      activeExperiments().isExperientMatch(experimentName, notMatch)
 
     return {
-      activateExperimentWithCallback: activateExperimentWithCallback
+      activateExperiment: activateExperiment
       isExperementActive: isExperementActive
     }
 

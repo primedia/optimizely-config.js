@@ -1,7 +1,7 @@
 'use strict';
 define [], ->
 
-  experementUtil = ->
+  activeExperiments = ->
 
     getActiveExperiments = ->
       return {} if isEmpty(window.rentPathExperiments)
@@ -29,12 +29,12 @@ define [], ->
       rentPathActiveExperiments = {}
       optimizelyObj             = window.optimizely
       oData                     = optimizelyObj.data
-      activeExperiments         = oData.state.activeExperiments
+      oActiveExperiments         = oData.state.activeExperiments
       allExperiments            = optimizelyObj.allExperiments
       i                         = 0
 
-      while i < (activeExperiments.length)
-        mExp = activeExperiments[i]
+      while i < (oActiveExperiments.length)
+        mExp = oActiveExperiments[i]
         if allExperiments[mExp].enabled
           curTest = oData.experiments[mExp].name
           curVar  = oData.state.variationNamesMap[mExp]
@@ -48,4 +48,4 @@ define [], ->
       isExperientMatch: isExperientMatch
     }
 
-  return experementUtil
+  return activeExperiments

@@ -2,8 +2,8 @@
 (function() {
   'use strict';
   define([], function() {
-    var experementUtil;
-    experementUtil = function() {
+    var activeExperiments;
+    activeExperiments = function() {
       var getActiveExperiments, isEmpty, isExperientMatch, loadActiveExperiments;
       getActiveExperiments = function() {
         if (isEmpty(window.rentPathExperiments)) {
@@ -36,18 +36,18 @@
         return false;
       };
       loadActiveExperiments = function() {
-        var activeExperiments, allExperiments, curTest, curVar, i, mExp, oData, optimizelyObj, rentPathActiveExperiments;
+        var allExperiments, curTest, curVar, i, mExp, oActiveExperiments, oData, optimizelyObj, rentPathActiveExperiments;
         if (!window.optimizely) {
           return {};
         }
         rentPathActiveExperiments = {};
         optimizelyObj = window.optimizely;
         oData = optimizelyObj.data;
-        activeExperiments = oData.state.activeExperiments;
+        oActiveExperiments = oData.state.activeExperiments;
         allExperiments = optimizelyObj.allExperiments;
         i = 0;
-        while (i < activeExperiments.length) {
-          mExp = activeExperiments[i];
+        while (i < oActiveExperiments.length) {
+          mExp = oActiveExperiments[i];
           if (allExperiments[mExp].enabled) {
             curTest = oData.experiments[mExp].name;
             curVar = oData.state.variationNamesMap[mExp];
@@ -61,7 +61,7 @@
         isExperientMatch: isExperientMatch
       };
     };
-    return experementUtil;
+    return activeExperiments;
   });
 
 }).call(this);
