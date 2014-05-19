@@ -33,4 +33,4 @@ define [], ->
 
     experiments
 
-  exists:     exists
+  exists: exists
