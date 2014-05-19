@@ -1,45 +1,36 @@
-'use strict';
+'use strict'
 define [], ->
 
-  activeExperiments = ->
+  collection = ->
+    window.rentPathExperiments ?= load()
+    (window.rentPathExperiments || {})
 
-    collection = ->
-      window.rentPathExperiments ?= load()
-      (window.rentPathExperiments || {})
+  exists = (experimentName, notMatch) ->
+    soTestRegex      = new RegExp(experimentName, "i")
+    soVariationRegex = new RegExp(notMatch, "i")
 
-    isEmpty = (obj) ->
-      if obj? and (Object.keys(obj).length > 0) then false else true
+    for experiment, variation of collection()
+      if (experiment.match(soTestRegex) and not variation.match(soVariationRegex))
+        return true
 
-    isExperimentMatch = (experimentName, notMatch) ->
-      soTestRegex      = new RegExp(experimentName, "i")
-      soVariationRegex = new RegExp(notMatch, "i")
+    false
 
-      for experiment, variation of collection()
-        if (experiment.match(soTestRegex) and not variation.match(soVariationRegex))
-          return true
+  load = ->
+    return {} unless window.optimizely
 
-      false
+    experiments        = {}
+    optimizelyObj      = window.optimizely
+    oData              = optimizelyObj.data
+    oActiveExperiments = oData.state.activeExperiments
+    allExperiments     = optimizelyObj.allExperiments
 
-    load = ->
-      return {} unless window.optimizely
+    for mExp in oActiveExperiments
+      if allExperiments[mExp].enabled
+        curTest = oData.experiments[mExp].name
+        curVar  = oData.state.variationNamesMap[mExp]
 
-      experiments        = {}
-      optimizelyObj      = window.optimizely
-      oData              = optimizelyObj.data
-      oActiveExperiments = oData.state.activeExperiments
-      allExperiments     = optimizelyObj.allExperiments
+        experiments[curTest] = curVar
 
-      for mExp in oActiveExperiments
-        if allExperiments[mExp].enabled
-          curTest = oData.experiments[mExp].name
-          curVar  = oData.state.variationNamesMap[mExp]
+    experiments
 
-          experiments[curTest] = curVar
-
-      experiments
-
-    return {
-      isExperimentMatch: isExperimentMatch
-    }
-
-  return activeExperiments
+  exists:     exists
