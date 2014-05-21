@@ -1,0 +1,23 @@
+{
+  "name": "optimizely-config",
+  "version": "1.0.3",
+  "main": "optimizely-config.js",
+  "dependencies": {
+    "requirejs": "git://github.com/yeoman/bower-requirejs",
+  },
+  "ignore": [
+    "coffee",
+    "README.md",
+    ".gitignore"
+  ],
+  "homepage": "https://github.com/primedia/optimizely-config.js",
+  "_release": "1.0.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.3",
+    "commit": "43e595a5a8f127361eb6c7e85ecd08e97cef0217"
+  },
+  "_source": "git@github.com:primedia/optimizely-config.js.git",
+  "_target": "v1.0.3",
+  "_originalSource": "git@github.com:primedia/optimizely-config.js.git"
+}

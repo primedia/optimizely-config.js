@@ -2,10 +2,20 @@
   "name": "optimizely-config",
   "version": "1.0.3",
   "main": "optimizely-config.js",
-  "dependencies": {},
   "ignore": [
     "src",
     "README.md",
-    ".gitignore"
-  ]
+    ".gitignore",
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/bower",
+    "test",
+    "tests"
+  ],
+  "homepage": "https://github.com/primedia/optimizely-config.js",
+  "authors": [
+    "Pasha Lifshiz <plifshiz@gmail.com>"
+  ],
+  "license": "MIT"
 }

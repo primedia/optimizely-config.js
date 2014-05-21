@@ -1,0 +1,6 @@
+.DS_Store
+.rvmrc
+vendor/bower
+vendor/ruby
+vendor/jam
+.bundle
