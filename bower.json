@@ -1,6 +1,6 @@
 {
   "name": "optimizely-config",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "optimizely-config.js",
   "ignore": [
     "src",
