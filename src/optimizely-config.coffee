@@ -1,12 +1,12 @@
 'use strict'
 define ['./active-experiments'], (activeExperiments) ->
 
-  activateExperiment = (experimentName, notMatch, callback, callbackArgs) ->
-    if activeExperiments.exists(experimentName, notMatch)
+  activateExperiment = (versionName, callback, callbackArgs) ->
+    if activeExperiments.exists(versionName)
       return callback.apply(null, callbackArgs)
 
-  isExperimentActive = (experimentName, notMatch) ->
-    activeExperiments.exists(experimentName, notMatch)
+  isExperimentActive = (versionName) ->
+    activeExperiments.exists(versionName)
 
   activateExperiment: activateExperiment
   isExperimentActive: isExperimentActive

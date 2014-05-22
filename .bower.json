@@ -3,7 +3,7 @@
   "version": "1.0.3",
   "main": "optimizely-config.js",
   "dependencies": {
-    "requirejs": "git://github.com/yeoman/bower-requirejs",
+    "requirejs": "git://github.com/yeoman/bower-requirejs"
   },
   "ignore": [
     "coffee",

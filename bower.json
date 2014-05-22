@@ -6,12 +6,9 @@
     "src",
     "README.md",
     ".gitignore",
-    "**/.*",
-    "node_modules",
     "bower_components",
     "vendor/bower",
-    "test",
-    "tests"
+    "spec"
   ],
   "homepage": "https://github.com/primedia/optimizely-config.js",
   "authors": [

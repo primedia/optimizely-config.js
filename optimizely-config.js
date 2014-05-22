@@ -3,13 +3,13 @@
   'use strict';
   define(['./active-experiments'], function(activeExperiments) {
     var activateExperiment, isExperimentActive;
-    activateExperiment = function(experimentName, notMatch, callback, callbackArgs) {
-      if (activeExperiments.exists(experimentName, notMatch)) {
+    activateExperiment = function(versionName, callback, callbackArgs) {
+      if (activeExperiments.exists(versionName)) {
         return callback.apply(null, callbackArgs);
       }
     };
-    isExperimentActive = function(experimentName, notMatch) {
-      return activeExperiments.exists(experimentName, notMatch);
+    isExperimentActive = function(versionName) {
+      return activeExperiments.exists(versionName);
     };
     return {
       activateExperiment: activateExperiment,

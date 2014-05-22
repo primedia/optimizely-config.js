@@ -3,22 +3,20 @@ define [], ->
 
   collection = ->
     window.rentPathExperiments ?= load()
-    (window.rentPathExperiments || {})
+    (window.rentPathExperiments || [])
 
-  exists = (experimentName, notMatch) ->
-    soTestRegex      = new RegExp(experimentName, "i")
-    soVariationRegex = new RegExp(notMatch, "i")
+  exists = (versionName) ->
+    soVersionRegex = new RegExp(versionName, "i")
 
-    for experiment, variation of collection()
-      if (experiment.match(soTestRegex) and not variation.match(soVariationRegex))
-        return true
+    while experiment = collection().pop()
+      return true if experiment.match soVersionRegex
 
     false
 
   load = ->
-    return {} unless window.optimizely
+    return [] unless window.optimizely
 
-    experiments        = {}
+    experiments        = []
     optimizelyObj      = window.optimizely
     oData              = optimizelyObj.data
     oActiveExperiments = oData.state.activeExperiments
@@ -26,10 +24,9 @@ define [], ->
 
     for mExp in oActiveExperiments
       if allExperiments[mExp].enabled
-        curTest = oData.experiments[mExp].name
         curVar  = oData.state.variationNamesMap[mExp]
 
-        experiments[curTest] = curVar
+        experiments.push curVar
 
     experiments
 

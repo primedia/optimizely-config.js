@@ -7,27 +7,24 @@
       if (window.rentPathExperiments == null) {
         window.rentPathExperiments = load();
       }
-      return window.rentPathExperiments || {};
+      return window.rentPathExperiments || [];
     };
-    exists = function(experimentName, notMatch) {
-      var experiment, soTestRegex, soVariationRegex, variation, _ref;
-      soTestRegex = new RegExp(experimentName, "i");
-      soVariationRegex = new RegExp(notMatch, "i");
-      _ref = collection();
-      for (experiment in _ref) {
-        variation = _ref[experiment];
-        if (experiment.match(soTestRegex) && !variation.match(soVariationRegex)) {
+    exists = function(versionName) {
+      var experiment, soVersionRegex;
+      soVersionRegex = new RegExp(versionName, "i");
+      while (experiment = collection().pop()) {
+        if (experiment.match(soVersionRegex)) {
           return true;
         }
       }
       return false;
     };
     load = function() {
-      var allExperiments, curTest, curVar, experiments, mExp, oActiveExperiments, oData, optimizelyObj, _i, _len;
+      var allExperiments, curVar, experiments, mExp, oActiveExperiments, oData, optimizelyObj, _i, _len;
       if (!window.optimizely) {
-        return {};
+        return [];
       }
-      experiments = {};
+      experiments = [];
       optimizelyObj = window.optimizely;
       oData = optimizelyObj.data;
       oActiveExperiments = oData.state.activeExperiments;
@@ -35,9 +32,8 @@
       for (_i = 0, _len = oActiveExperiments.length; _i < _len; _i++) {
         mExp = oActiveExperiments[_i];
         if (allExperiments[mExp].enabled) {
-          curTest = oData.experiments[mExp].name;
           curVar = oData.state.variationNamesMap[mExp];
-          experiments[curTest] = curVar;
+          experiments.push(curVar);
         }
       }
       return experiments;
