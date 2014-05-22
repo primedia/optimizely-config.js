@@ -4,15 +4,15 @@
   define([], function() {
     var collection, exists, load;
     collection = function() {
-      if (window.rentPathExperiments == null) {
-        window.rentPathExperiments = load();
-      }
-      return window.rentPathExperiments || [];
+      return window.rentPathExperiments || (window.rentPathExperiments = load());
     };
     exists = function(versionName) {
-      var experiment, soVersionRegex;
+      var experiment, experiments, soVersionRegex, _i, _len, _ref;
       soVersionRegex = new RegExp(versionName, "i");
-      while (experiment = collection().pop()) {
+      experiments = collection();
+      _ref = collection();
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        experiment = _ref[_i];
         if (experiment.match(soVersionRegex)) {
           return true;
         }

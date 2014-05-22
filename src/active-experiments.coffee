@@ -2,13 +2,12 @@
 define [], ->
 
   collection = ->
-    window.rentPathExperiments ?= load()
-    (window.rentPathExperiments || [])
+    window.rentPathExperiments ||= load()
 
   exists = (versionName) ->
     soVersionRegex = new RegExp(versionName, "i")
-
-    while experiment = collection().pop()
+    experiments    = collection()
+    for experiment in collection()
       return true if experiment.match soVersionRegex
 
     false
