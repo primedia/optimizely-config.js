@@ -4,7 +4,11 @@
   define([], function() {
     var collection, exists, load;
     collection = function() {
-      return window.rentPathExperiments || (window.rentPathExperiments = load());
+      if (window.rentPathExperiments && window.rentPathExperiments.length > 0) {
+        return window.rentPathExperiments;
+      } else {
+        return window.rentPathExperiments = load();
+      }
     };
     exists = function(versionName) {
       var experiment, experiments, soVersionRegex, _i, _len, _ref;

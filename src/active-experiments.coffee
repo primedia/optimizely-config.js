@@ -2,7 +2,10 @@
 define [], ->
 
   collection = ->
-    window.rentPathExperiments ||= load()
+    if window.rentPathExperiments and window.rentPathExperiments.length > 0
+      window.rentPathExperiments
+    else
+      window.rentPathExperiments = load()
 
   exists = (versionName) ->
     soVersionRegex = new RegExp(versionName, "i")
