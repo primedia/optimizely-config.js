@@ -24,21 +24,17 @@
       return false;
     };
     load = function() {
-      var allExperiments, curVar, experiments, mExp, oActiveExperiments, oData, optimizelyObj, _i, _len;
+      var experiments, mExp, oData, optimizelyObj, _i, _len, _ref;
       if (!window.optimizely) {
         return [];
       }
       experiments = [];
       optimizelyObj = window.optimizely;
       oData = optimizelyObj.data;
-      oActiveExperiments = oData.state.activeExperiments;
-      allExperiments = optimizelyObj.allExperiments;
-      for (_i = 0, _len = oActiveExperiments.length; _i < _len; _i++) {
-        mExp = oActiveExperiments[_i];
-        if (allExperiments[mExp].enabled) {
-          curVar = oData.state.variationNamesMap[mExp];
-          experiments.push(curVar);
-        }
+      _ref = optimizelyObj.data.state.activeExperiments;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        mExp = _ref[_i];
+        experiments.push(oData.state.variationNamesMap[mExp]);
       }
       return experiments;
     };

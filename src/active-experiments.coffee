@@ -21,14 +21,9 @@ define [], ->
     experiments        = []
     optimizelyObj      = window.optimizely
     oData              = optimizelyObj.data
-    oActiveExperiments = oData.state.activeExperiments
-    allExperiments     = optimizelyObj.allExperiments
 
-    for mExp in oActiveExperiments
-      if allExperiments[mExp].enabled
-        curVar  = oData.state.variationNamesMap[mExp]
-
-        experiments.push curVar
+    for mExp in optimizelyObj.data.state.activeExperiments
+      experiments.push oData.state.variationNamesMap[mExp]
 
     experiments
 
