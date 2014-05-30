@@ -16,14 +16,13 @@ define [], ->
     false
 
   load = ->
-    return [] unless window.optimizely
+    experiments = []
+    oState      = window.optimizely.data.state
 
-    experiments        = []
-    optimizelyObj      = window.optimizely
-    oData              = optimizelyObj.data
+    return experiments unless oState
 
-    for mExp in optimizelyObj.data.state.activeExperiments
-      experiments.push oData.state.variationNamesMap[mExp]
+    for mExp in oState.activeExperiments
+      experiments.push oState.variationNamesMap[mExp]
 
     experiments
 

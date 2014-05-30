@@ -24,17 +24,16 @@
       return false;
     };
     load = function() {
-      var experiments, mExp, oData, optimizelyObj, _i, _len, _ref;
-      if (!window.optimizely) {
-        return [];
-      }
+      var experiments, mExp, oState, _i, _len, _ref;
       experiments = [];
-      optimizelyObj = window.optimizely;
-      oData = optimizelyObj.data;
-      _ref = optimizelyObj.data.state.activeExperiments;
+      oState = window.optimizely.data.state;
+      if (!oState) {
+        return experiments;
+      }
+      _ref = oState.activeExperiments;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         mExp = _ref[_i];
-        experiments.push(oData.state.variationNamesMap[mExp]);
+        experiments.push(oState.variationNamesMap[mExp]);
       }
       return experiments;
     };

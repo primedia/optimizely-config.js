@@ -2,6 +2,6 @@
 
 ## Setup
 - `bundle install`
-- `bundle exec forman start`
+- `bundle exec foreman start`
 
 Still working on specs
