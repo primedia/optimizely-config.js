@@ -26,11 +26,7 @@
     load = function() {
       var experiments, mExp, oState, _i, _len, _ref;
       experiments = [];
-      if (!window.optimizely) {
-        return experiments;
-      }
-      oState = window.optimizely.data.state;
-      if (!oState) {
+      if (!(window.optimizely && (oState = window.optimizely.data.state))) {
         return experiments;
       }
       _ref = oState.activeExperiments;

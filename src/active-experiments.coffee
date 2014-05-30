@@ -17,9 +17,7 @@ define [], ->
 
   load = ->
     experiments = []
-    return experiments unless window.optimizely
-    oState  = window.optimizely.data.state
-    return experiments unless oState
+    return experiments unless window.optimizely and oState = window.optimizely.data.state
 
     for mExp in oState.activeExperiments
       experiments.push oState.variationNamesMap[mExp]
