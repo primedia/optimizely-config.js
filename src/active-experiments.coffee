@@ -17,8 +17,8 @@ define [], ->
 
   load = ->
     experiments = []
-    oState      = window.optimizely.data.state
-
+    return experiments unless window.optimizely
+    oState  = window.optimizely.data.state
     return experiments unless oState
 
     for mExp in oState.activeExperiments
